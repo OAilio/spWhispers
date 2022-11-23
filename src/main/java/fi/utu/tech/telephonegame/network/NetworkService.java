@@ -9,6 +9,7 @@ import java.util.concurrent.TransferQueue;
 
 // Test comment
 // Test comment 2
+// Test comment 3
 public class NetworkService extends Thread implements Network {
 	/*
 	 * Do not change the existing class variables
