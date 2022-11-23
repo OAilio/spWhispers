@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TransferQueue;
 
 // Test comment
+// Test comment 2
 public class NetworkService extends Thread implements Network {
 	/*
 	 * Do not change the existing class variables
