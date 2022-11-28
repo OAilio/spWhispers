@@ -20,6 +20,7 @@ public class NetworkService extends Thread implements Network {
 	 * No need to change the construtor
 	 */
 	public NetworkService() {
+
 		this.start();
 	}
 
@@ -33,8 +34,10 @@ public class NetworkService extends Thread implements Network {
 	 * 
 	 */
 	public void startListening(int serverPort) {
+
 		System.out.printf("I should start listening for peers at port %d%n", serverPort);
 		// TODO
+
 	}
 
 	/**
@@ -46,8 +49,12 @@ public class NetworkService extends Thread implements Network {
 	 * @param peerPort The TCP port to connect to
 	 */
 	public void connect(String peerIP, int peerPort) throws IOException, UnknownHostException {
+
 		System.out.printf("I should connect myself to %s, port %d%n", peerIP, peerPort);
 		// TODO
+		// haloo haloo
+
+
 	}
 
 	/**
@@ -57,6 +64,7 @@ public class NetworkService extends Thread implements Network {
 	 * 
 	 */
 	private void send(Serializable out) {
+
 		// Send the object to all neighbouring nodes
 		// TODO
 	}
@@ -87,7 +95,9 @@ public class NetworkService extends Thread implements Network {
 	 * 
 	 * @return Reference to the queue incoming messages queue
 	 */
-	public TransferQueue<Object> getInputQueue() {
+	public TransferQueue<Object> getInputQueue()
+
+	{
 		return this.inQueue;
 	}
 

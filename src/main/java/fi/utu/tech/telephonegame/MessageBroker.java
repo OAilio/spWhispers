@@ -46,6 +46,9 @@ public class MessageBroker extends Thread {
 	 * 7. Return the processed message
 	 */
 	private Message process(Object procMessage) {
+
+
+
 		return null;
 	}
 
@@ -70,6 +73,7 @@ public class MessageBroker extends Thread {
 	 * @param message The Message object to be sent
 	 */
 	public void send(Message message) {
+		
 		network.postMessage(message);
 	}
 
