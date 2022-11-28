@@ -38,6 +38,7 @@ public class NetworkService extends Thread implements Network {
 	public void startListening(int serverPort) {
 		System.out.printf("I should start listening for peers at port %d%n", serverPort);
 		// TODO
+		//Tähän kirjoitin ohjelmakoodia
 	}
 
 	/**
