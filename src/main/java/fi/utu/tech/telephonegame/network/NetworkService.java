@@ -88,14 +88,14 @@ public class NetworkService extends Thread implements Network {
 	private void send(Serializable out) {
 		// Send the object to all neighbouring nodes
 		// TODO
-		LinkedTransferQueue message = new LinkedTransferQueue((Collection) out);
-		try {
-			while(!message.hasWaitingConsumer() == true){
-				message.tryTransfer(out);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		//LinkedTransferQueue message = new LinkedTransferQueue((Collection) out);
+		//try {
+			//while(!message.hasWaitingConsumer() == true){
+				//message.tryTransfer(out);
+			//}
+		//}catch(Exception e){
+			//e.printStackTrace();
+		//}
 	}
 
 	/*
