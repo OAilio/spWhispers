@@ -47,7 +47,7 @@ public interface Network {
 	 * Start listening listening for new peers
 	 * @param serverPort The port to listen to new peers
 	 */
-	public void startListening(int serverPort);
+	public void startListening(int serverPort) throws IOException;
 
 	/**
 	 * Establish a connection to another peer

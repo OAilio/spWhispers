@@ -2,7 +2,10 @@ package fi.utu.tech.telephonegame.network;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Collection;
 import java.util.concurrent.LinkedTransferQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TransferQueue;
@@ -35,12 +38,31 @@ public class NetworkService extends Thread implements Network {
 	 * @param serverPort Which port should we start to listen to?
 	 * 
 	 */
-	public void startListening(int serverPort) {
+	public void startListening(int serverPort) throws IOException {
 		System.out.printf("I should start listening for peers at port %d%n", serverPort);
 		// TODO
-		//Tähän kirjoitin ohjelmakoodia
-	}
+		Thread myThread = new Thread();
+		try{
+			// Create the ServerSocket
+			ServerSocket server = new ServerSocket(serverPort);
 
+			// Listen to incoming connections and accept them.
+			while(true) {
+				Socket connection = server.accept();
+
+				// Send the connection to the Clienthandler-thread
+				Thread ch = new Thread (new ClientHandler(connection));
+				// Start the
+				ch.start();
+				ch.run();
+			}
+
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+
+		myThread.start();
+	}
 	/**
 	 * This method will be called when connecting to a peer (other broken telephone
 	 * instance)
@@ -52,6 +74,9 @@ public class NetworkService extends Thread implements Network {
 	public void connect(String peerIP, int peerPort) throws IOException, UnknownHostException {
 		System.out.printf("I should connect myself to %s, port %d%n", peerIP, peerPort);
 		// TODO
+		while(true){
+			Socket connection  = new Socket(peerIP, peerPort);
+		}
 	}
 
 	/**
@@ -63,6 +88,14 @@ public class NetworkService extends Thread implements Network {
 	private void send(Serializable out) {
 		// Send the object to all neighbouring nodes
 		// TODO
+		LinkedTransferQueue message = new LinkedTransferQueue((Collection) out);
+		try {
+			while(!message.hasWaitingConsumer() == true){
+				message.tryTransfer(out);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	/*
