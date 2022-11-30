@@ -102,7 +102,11 @@ public class MessageBroker extends Thread {
 		if (rootNode) {
 			System.out.println("Root node");
 			// Use the default port for the server and start listening for peers
-			network.startListening(rootServerPort);
+			try {
+				network.startListening(rootServerPort);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 			// As a root node, we are responsible for answering resolving requests - start resolver server
 			resolver.startResolverServer();
 			// No need to connect to anybody since we are the first node, the "root node"
