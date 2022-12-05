@@ -21,7 +21,7 @@ public class Refiner {
 	private static final String[] objects = (
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit Aliquam laoreet vitae lectus id vehicula ")
 			.split(" ");
-	 */
+	*/
 	private static final String[] conjunctions  = (
 			"että, jotta, koska, kun, jos, vaikka, kunnes, mikäli, ja")
 			.split(",");

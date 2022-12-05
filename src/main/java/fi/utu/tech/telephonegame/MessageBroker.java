@@ -1,6 +1,8 @@
 package fi.utu.tech.telephonegame;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.net.UnknownHostException;
 import java.util.Objects;
 import java.util.UUID;
@@ -37,15 +39,28 @@ public class MessageBroker extends Thread {
 
 	/*
 	 * In the the process method you need to:
-	 * 1. Test the type of the incoming object
-	 * 2. Keep track of messages that are alredy processed by this node
-	 * 3. Show the incoming message in the received message text area
+	 * 1. Test the type of the incoming object OK
+	 * 2. Keep track of messages that are alredy processed by this node OK
+	 * 3. Show the incoming message in the received message text area OK
 	 * 4. Change the text and the color using the Refiner class
 	 * 5. Set the new color to the color area
 	 * 6. Show the refined message in the refined message text area
 	 * 7. Return the processed message
 	 */
-	private Message process(Object procMessage) {
+	private Message process(Object procMessage) throws ClassNotFoundException {
+		if(procMessage instanceof Message){
+			Message incomingMessage = (Message) procMessage;
+			if(!prevMessages.containsKey(incomingMessage.getId())){
+				
+			gui_io.setReceivedMessage(incomingMessage.getMessage());
+			incomingMessage.setMessage(Refiner.refineText(incomingMessage.getMessage()));
+			incomingMessage.setColor(Refiner.refineColor(incomingMessage.getColor()));
+			gui_io.setSignal(incomingMessage.getColor());
+			gui_io.setRefinedMessage(incomingMessage.getMessage());
+			prevMessages.put(incomingMessage.getId());
+			return incomingMessage;
+			}
+		}
 		return null;
 	}
 
@@ -61,8 +76,24 @@ public class MessageBroker extends Thread {
 	 * 
 	 */
 	public void run() {
-
-	}
+		while(true) {
+			try {
+				Message message = process(procQueue.take());
+				if(message==null) {
+					continue;
+				}
+				send(message);
+				
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+			
+		}
 
 	/**
 	 * Adds Message object to the sending queue to be processed by the network component
@@ -81,6 +112,7 @@ public class MessageBroker extends Thread {
 	 */
 	public void send(String text) {
 		Message message = new Message(text, 0);
+		prevMessages.put(message.getId());
 		this.send(message);
 	}
 
